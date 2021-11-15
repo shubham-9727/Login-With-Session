@@ -6,7 +6,7 @@ const port = 3000
 
 app.use(express.static("public"));
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 
 app.use(session({
     secret: 'keyboard cat',
@@ -42,8 +42,12 @@ app.post("/login", function (req, res) {
 })
 
 app.post("/signup", function (req, res) {
-    console.log(req.body);
     res.redirect("/login");
+})
+
+app.get("/logout", function(req,res){
+    req.session.destroy();
+    res.redirect("/")
 })
 
 app.listen(port, () => {
